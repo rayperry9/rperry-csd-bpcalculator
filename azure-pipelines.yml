@@ -20,7 +20,7 @@ variables:
   environmentName: 'rayperry-bpcalculator'
 
   # Project root folder. Point to the folder containing manage.py file.
-  projectRoot: app.py
+  projectRoot: $(System.DefaultWorkingDirectory)
   
   # Python version: 3.7
   pythonVersion: '3.7'
