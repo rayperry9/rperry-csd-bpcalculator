@@ -44,9 +44,9 @@ stages:
         python -m pip install --upgrade pip
         pip install setup
         pip install -r requirements.txt
-        pipenv install flask
-        pipenv install pylint
-        pipenv install autopep8
+        pip install flask
+        pip install pylint
+        pip install autopep8
 
 
     - task: ArchiveFiles@2
