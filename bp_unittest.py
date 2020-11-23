@@ -55,3 +55,7 @@ class TestBpCalc (unittest.TestCase):
     def test_highlood(self):
         result = get_results(150, 70)
         self.assertEqual(result, "High blood pressure")
+
+if __name__ == '__main__':
+    import xmlrunner
+    unittest.main(testRunner=xmlrunner.XMLTestRunner(output='test-reports'))
