@@ -1,5 +1,6 @@
 #!/usr/local/bin/python3
 
+
 def get_input(systolic_value, diastolic_value):
     SYSTOLICMIN = 70
     SYSTOLICMAX = 190
@@ -21,21 +22,28 @@ def get_input(systolic_value, diastolic_value):
         bprisk = "Please only enter numbers"
         return bprisk
 
+
 def get_results(systolic_value, diastolic_value):
     if systolic_value >= 140 and systolic_value < 190 and diastolic_value <= 90:
         bprisk = "High blood pressure"
-    elif (systolic_value >= 120 and systolic_value < 140) or (diastolic_value >= 80 and diastolic_value < 90):
+    elif (systolic_value >= 120 and systolic_value < 140) or (
+        diastolic_value >= 80 and diastolic_value < 90
+    ):
         bprisk = "Pre-high blood pressure"
-    elif (systolic_value >= 90 and systolic_value < 120) or (diastolic_value >= 60 and diastolic_value < 80):
+    elif (systolic_value >= 90 and systolic_value < 120) or (
+        diastolic_value >= 60 and diastolic_value < 80
+    ):
         bprisk = "Ideal blood pressure"
     elif systolic_value <= 90 and diastolic_value <= 60:
         bprisk = "Low blood pressure"
     else:
-        bprisk="Invalid reading"
+        bprisk = "Invalid reading"
     return bprisk
+
 
 def main():
     get_input()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
