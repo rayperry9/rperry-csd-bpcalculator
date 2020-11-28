@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<testsuite errors="0" failures="0" name="TestBpCalc-20201128115740" tests="9" time="0.002">
+<testsuite errors="0" failures="0" name="TestBpCalc-20201128120300" tests="9" time="0.002">
 	<testcase classname="TestBpCalc" name="test_highlood" time="0.000"/>
 	<testcase classname="TestBpCalc" name="test_idealblood" time="0.000"/>
 	<testcase classname="TestBpCalc" name="test_invalddias" time="0.000"/>
