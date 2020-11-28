@@ -1,0 +1,305 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_rayperry_bpcalculator_name": {
+            "defaultValue": "rayperry-bpcalculator",
+            "type": "String"
+        },
+        "serverfarms_ASP_bpcalculator_89f9_externalid": {
+            "defaultValue": "/subscriptions/82804444-5a0c-4ece-b557-ed9532e200f0/resourceGroups/bpcalculator/providers/Microsoft.Web/serverfarms/ASP-bpcalculator-89f9",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('sites_rayperry_bpcalculator_name')]",
+            "location": "UK South",
+            "kind": "app,linux",
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[parameters('serverfarms_ASP_bpcalculator_89f9_externalid')]",
+                "reserved": true,
+                "isXenon": false,
+                "hyperV": false,
+                "siteConfig": {},
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": false,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": false,
+                "redundancyMode": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/web')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "linuxFxVersion": "PYTHON|3.7",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2019",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$rayperry-bpcalculator",
+                "azureStorageAccounts": {},
+                "scmType": "VSTSRM",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false
+                    }
+                ],
+                "loadBalancing": "LeastRequests",
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "autoHealEnabled": false,
+                "localMySqlEnabled": false,
+                "ipSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictionsUseMain": false,
+                "http20Enabled": false,
+                "minTlsVersion": "1.2",
+                "ftpsState": "AllAllowed",
+                "reservedInstanceCount": 0
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/167b44cfc3d6407d9545bc24351ba9ad')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "VSTS_ZIP_DEPLOY",
+                "message": "Created via a push deployment",
+                "start_time": "2020-11-15T16:30:55.9990256Z",
+                "end_time": "2020-11-15T16:30:57.5250059Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/21605457630733')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "status": 3,
+                "author": "Ray Perry",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"096abe7eef93c8a3453112b86d0f3ae70654e97d\",\"buildId\":\"2\",\"buildNumber\":\"20201115.2\",\"repoProvider\":\"GitHub\",\"repoName\":\"rayperry9/bpcalculator\",\"collectionUrl\":\"https://dev.azure.com/ray-perry/\",\"teamProject\":\"19268840-9f1e-44e6-b8fc-af032c935339\",\"buildProjectUrl\":\"https://dev.azure.com/ray-perry/19268840-9f1e-44e6-b8fc-af032c935339\",\"repositoryUrl\":\"https://github.com/rayperry9/bpcalculator\",\"branch\":\"main\",\"teamProjectName\":\"bpcalculator\",\"slotName\":\"production\"}",
+                "start_time": "2020-11-15T16:27:10.850691Z",
+                "end_time": "2020-11-15T16:27:10.850691Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/31605457863353')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author": "Ray Perry",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"68a9662f6cba0de6328b7c86a0b08744e61489e6\",\"buildId\":\"3\",\"buildNumber\":\"20201115.3\",\"repoProvider\":\"GitHub\",\"repoName\":\"rayperry9/bpcalculator\",\"collectionUrl\":\"https://dev.azure.com/ray-perry/\",\"teamProject\":\"19268840-9f1e-44e6-b8fc-af032c935339\",\"buildProjectUrl\":\"https://dev.azure.com/ray-perry/19268840-9f1e-44e6-b8fc-af032c935339\",\"repositoryUrl\":\"https://github.com/rayperry9/bpcalculator\",\"branch\":\"main\",\"teamProjectName\":\"bpcalculator\",\"slotName\":\"production\"}",
+                "start_time": "2020-11-15T16:31:03.9030584Z",
+                "end_time": "2020-11-15T16:31:03.9030584Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/41605458393175')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author": "Ray Perry",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"6f3aa102de47ba0587cb5c3c90ef07b0477cf39f\",\"buildId\":\"4\",\"buildNumber\":\"20201115.4\",\"repoProvider\":\"GitHub\",\"repoName\":\"rayperry9/bpcalculator\",\"collectionUrl\":\"https://dev.azure.com/ray-perry/\",\"teamProject\":\"19268840-9f1e-44e6-b8fc-af032c935339\",\"buildProjectUrl\":\"https://dev.azure.com/ray-perry/19268840-9f1e-44e6-b8fc-af032c935339\",\"repositoryUrl\":\"https://github.com/rayperry9/bpcalculator\",\"branch\":\"main\",\"teamProjectName\":\"bpcalculator\",\"slotName\":\"production\"}",
+                "start_time": "2020-11-15T16:39:53.5164084Z",
+                "end_time": "2020-11-15T16:39:53.5164084Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/4c06dd8741744c50867174580832a19c')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "VSTS_ZIP_DEPLOY",
+                "message": "Created via a push deployment",
+                "start_time": "2020-11-16T09:57:09.6698347Z",
+                "end_time": "2020-11-16T09:57:56.162036Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/51605520679141')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author": "Ray Perry",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"6f3aa102de47ba0587cb5c3c90ef07b0477cf39f\",\"buildId\":\"5\",\"buildNumber\":\"20201116.1\",\"repoProvider\":\"GitHub\",\"repoName\":\"rayperry9/bpcalculator\",\"collectionUrl\":\"https://dev.azure.com/ray-perry/\",\"teamProject\":\"19268840-9f1e-44e6-b8fc-af032c935339\",\"buildProjectUrl\":\"https://dev.azure.com/ray-perry/19268840-9f1e-44e6-b8fc-af032c935339\",\"repositoryUrl\":\"https://github.com/rayperry9/bpcalculator\",\"branch\":\"main\",\"teamProjectName\":\"Blood Pressure Calculator\",\"slotName\":\"production\"}",
+                "start_time": "2020-11-16T09:57:59.2843541Z",
+                "end_time": "2020-11-16T09:57:59.2843541Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/61605537971890')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author": "Ray Perry",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"6f3aa102de47ba0587cb5c3c90ef07b0477cf39f\",\"buildId\":\"6\",\"buildNumber\":\"20201116.2\",\"repoProvider\":\"GitHub\",\"repoName\":\"rayperry9/bpcalculator\",\"collectionUrl\":\"https://dev.azure.com/ray-perry/\",\"teamProject\":\"19268840-9f1e-44e6-b8fc-af032c935339\",\"buildProjectUrl\":\"https://dev.azure.com/ray-perry/19268840-9f1e-44e6-b8fc-af032c935339\",\"repositoryUrl\":\"https://github.com/rayperry9/bpcalculator\",\"branch\":\"main\",\"teamProjectName\":\"Blood Pressure Calculator\",\"slotName\":\"production\"}",
+                "start_time": "2020-11-16T14:46:12.7542293Z",
+                "end_time": "2020-11-16T14:46:12.7542293Z",
+                "active": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/7dc71411be3046419a506bcc24c5550f')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "VSTS_ZIP_DEPLOY",
+                "message": "Created via a push deployment",
+                "start_time": "2020-11-15T16:38:28.8701595Z",
+                "end_time": "2020-11-15T16:39:47.5868226Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/d7e4bc6d72754369b014ff3f0ff436d5')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "VSTS_ZIP_DEPLOY",
+                "message": "Created via a push deployment",
+                "start_time": "2020-11-16T14:45:11.4416404Z",
+                "end_time": "2020-11-16T14:46:05.3413457Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_rayperry_bpcalculator_name'), '/', parameters('sites_rayperry_bpcalculator_name'), '.azurewebsites.net')]",
+            "location": "UK South",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_rayperry_bpcalculator_name'))]"
+            ],
+            "properties": {
+                "siteName": "rayperry-bpcalculator",
+                "hostNameType": "Verified"
+            }
+        }
+    ]
+}
