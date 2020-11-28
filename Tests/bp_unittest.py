@@ -2,7 +2,11 @@
 
 import unittest
 from unittest.mock import patch
-from Application.bp_calculator import get_input, get_results
+import os
+import sys
+
+sys.path.append(os.path.join(os.getcwd(), "Application"))
+from bp_calculator import get_input, get_results
 
 
 class TestBpCalc(unittest.TestCase):
