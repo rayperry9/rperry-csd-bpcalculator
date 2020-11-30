@@ -1,5 +1,16 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
+
+export let options = {
+  ext: {
+    loadimpact: {
+      projectID: 3516378,
+      // Test runs with the same name groups test runs together
+      name: "YOUR TEST NAME"
+    }
+  }
+}
+
 export let options = {
   vus: 10,
   duration: '30s',
