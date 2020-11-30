@@ -14,7 +14,7 @@ variables:
   webAppName: 'rayperry-bpcalculator'
 
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+  vmImageName: 'Ubuntu-20.04'
 
   # Environment name
   environmentName: 'rayperry-bpcalculator'
