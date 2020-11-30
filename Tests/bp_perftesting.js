@@ -6,6 +6,6 @@ export let options = {
 };
 
 export default function() {
-  http.get('http://rayperry-qa.azurewebsites.net/');
+  http.get('http://rayperry-qa-bpcalculator.azurewebsites.net/');
   sleep(1);
 }
