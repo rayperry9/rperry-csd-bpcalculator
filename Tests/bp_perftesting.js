@@ -6,14 +6,10 @@ export let options = {
     loadimpact: {
       projectID: 3516378,
       // Test runs with the same name groups test runs together
-      name: "YOUR TEST NAME"
+      vus: 10,
+      duration: '30s',
     }
   }
-}
-
-export let options = {
-  vus: 10,
-  duration: '30s',
 };
 
 export default function() {
