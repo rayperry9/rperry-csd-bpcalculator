@@ -23,6 +23,11 @@ class TestBpCalc(unittest.TestCase):
         self.assertRaisesRegex(ValueError, "Please only enter numbers")
 
     @patch("builtins.input")
+    def test_invalidchar(self, input):
+        get_input("?", "-")
+        self.assertRaisesRegex(ValueError, "Please only enter numbers")
+
+    @patch("builtins.input")
     def test_invalidrangesys(self, input):
         get_input("8000", "80")
         self.assertRaisesRegex(
