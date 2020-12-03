@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
-PATH = "/Users/raymond.perry/bin/chromedriver"
+PATH = "/usr/local/bin/chromedriver"
 driver = webdriver.Chrome(PATH)
 
 driver.get("https://rayperry-qa-bpcalculator.azurewebsites.net")
