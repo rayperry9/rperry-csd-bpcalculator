@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<testsuite errors="0" failures="0" name="PythonOrgSearch-20201203130613" tests="1" time="3.845">
+	<testcase classname="PythonOrgSearch" name="test_example" time="3.845"/>
+	<system-out>
+<![CDATA[Test
+]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

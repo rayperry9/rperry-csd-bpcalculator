@@ -1,0 +1,72 @@
+import unittest
+from unittest.mock import patch
+import os
+import sys
+from selenium import webdriver
+
+sys.path.append(os.path.join(os.getcwd(), "Application"))
+from bp_calculator import get_input, get_results
+
+class E2ETestBpCalc(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome("/Users/raymond.perry/bin/chromedriver")
+        self.driver.get("https://rayperry-qa-bpcalculator.azurewebsites.net/")
+
+    # Testing get_input functionality
+    @patch("builtins.input")
+    def test_invalidsys(self, input):
+        get_input("a", "b")
+        self.assertRaisesRegex(ValueError, "Please only enter numbers")
+
+    @patch("builtins.input")
+    def test_invalddias(self, input):
+        get_input("100", "?")
+        self.assertRaisesRegex(ValueError, "Please only enter numbers")
+
+    @patch("builtins.input")
+    def test_invalidchar(self, input):
+        get_input("?", "-")
+        self.assertRaisesRegex(ValueError, "Please only enter numbers")
+
+    @patch("builtins.input")
+    def test_invalidrangesys(self, input):
+        get_input("8000", "80")
+        self.assertRaisesRegex(
+            ValueError, "Invalid Systolic Value, please re-enter value."
+        )
+
+    @patch("builtins.input")
+    def test_invalidrangedias(self, input):
+        get_input("100", "8000")
+        self.assertRaisesRegex(
+            ValueError, "Invalid Diastolic Value, please re-enter value."
+        )
+
+    @patch("builtins.input")
+    def test_valid(self, input):
+        get_input("80", "50")
+
+    # Testing get_results functionality
+    def test_lowblood(self):
+        result = get_results(85, 55)
+        self.assertEqual(result, "Low blood pressure")
+
+    def test_idealblood(self):
+        result = get_results(100, 70)
+        self.assertEqual(result, "Ideal blood pressure")
+
+    def test_preblood(self):
+        result = get_results(130, 55)
+        self.assertEqual(result, "Pre-high blood pressure")
+
+    def test_highlood(self):
+        result = get_results(150, 70)
+        self.assertEqual(result, "High blood pressure")
+
+    def tearDown(self):
+        self.driver.close()
+
+if __name__ == "__main__":
+    import xmlrunner
+    unittest.main(testRunner=xmlrunner.XMLTestRunner(output="Tests/test-reports"))
