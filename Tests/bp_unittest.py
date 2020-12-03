@@ -9,7 +9,7 @@ sys.path.append(os.path.join(os.getcwd(), "Application"))
 from bp_calculator import get_input, get_results
 
 
-class TestBpCalc(unittest.TestCase):
+class UnitTestBpCalc(unittest.TestCase):
 
     # Testing get_input functionality
     @patch("builtins.input")
