@@ -1,10 +1,13 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 
 
+chromeOptions = Options()
+chromeOptions.headless = True
 PATH = "/usr/local/bin/chromedriver"
-driver = webdriver.Chrome(PATH)
+driver = webdriver.Chrome(PATH, options=chromeOptions)
 
 driver.get("https://rayperry-qa-bpcalculator.azurewebsites.net")
 print(driver.title)
