@@ -17,8 +17,13 @@ def openApp(context):
 
 
 @then("verify the container for systolic value input exists")
-def verifyValue(context):
+def verifySysValue(context):
     status = context.driver.find_element_by_name("systolic_value").is_displayed()
+    assert status is True
+
+@then("verify the container for diastolic value input exists")
+def verifyDiasValue(context):
+    status = context.driver.find_element_by_name("diastolic_value").is_displayed()
     assert status is True
 
 
