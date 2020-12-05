@@ -1,4 +1,4 @@
-Feature: Blood Pressure Calculator Title
+Feature: Blood Pressure Calculator Application
   Scenario: Blood Pressure Calculator Systolic Value Input on Application
     Given launch chrome browser
     When open blood pressure calculator
