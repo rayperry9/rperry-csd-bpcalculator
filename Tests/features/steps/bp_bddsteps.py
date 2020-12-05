@@ -26,6 +26,11 @@ def verifyDiasValue(context):
     status = context.driver.find_element_by_name("diastolic_value").is_displayed()
     assert status is True
 
+@then("verify the calculate blood pressure button exists")
+def verifyDiasValue(context):
+    status = context.driver.find_element_by_id("calc_btn").is_displayed()
+    assert status is True
+
 
 @then("close browser")
 def closeBrowser(context):
