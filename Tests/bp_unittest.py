@@ -22,6 +22,7 @@ class UnitTestBpCalc(unittest.TestCase):
         get_input("100", "?")
         self.assertRaisesRegex(ValueError, "Please only enter numbers")
 
+
     @patch("builtins.input")
     def test_invalidchar(self, input):
         get_input("?", "-")
