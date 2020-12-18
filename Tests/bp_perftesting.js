@@ -10,7 +10,7 @@ export let options = {
   ext: {
     loadimpact: {
       projectID: 3516378,
-      // Test runs with the same name groups test runs together
+      
     }
   }
 };
