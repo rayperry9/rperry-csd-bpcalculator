@@ -1,0 +1,28 @@
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: main
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: ubuntu-20.04
+  steps:
+  - checkout: self
+  - task: DockerInstaller@0
+    displayName: Install Docker
+  - task: CmdLine@2
+    displayName: Docker pull owasp/zap2docker-stable
+    inputs:
+      script: docker pull owasp/zap2docker-stable
+  - task: CmdLine@2
+    displayName: Run OWASP Scan
+    inputs:
+      script: "docker run --user root -v \"$(pwd)\":/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t http://rayperry-dev-bpcalculator.azurewebsites.net/ -I -r Tests/test-reports/zapscan-report.html \n"
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Report
+    inputs:
+      PathtoPublish: $(System.DefaultWorkingDirectory)/Tests/test-reports
+      ArtifactName: zapscan-report.html
+...

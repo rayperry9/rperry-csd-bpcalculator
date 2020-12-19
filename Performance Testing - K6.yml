@@ -1,0 +1,35 @@
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: main
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: ubuntu-20.04
+  steps:
+  - checkout: self
+  - task: CmdLine@2
+    displayName: Install Dependencies K6
+    inputs:
+      script: >
+        sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
+
+
+        echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
+
+
+        sudo apt-get update
+
+
+        sudo apt-get install k6
+  - task: CmdLine@2
+    displayName: Load Testing
+    inputs:
+      script: >-
+        k6 login cloud -t 522152e4b3e7f605de01dd8d335a7a66fa3cb07c2b905db8c948ece7aa3f85d6
+
+
+        k6 run -o cloud Tests/bp_perftesting.js
+...

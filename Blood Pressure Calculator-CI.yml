@@ -1,0 +1,90 @@
+trigger:
+  branches:
+    include:
+    - main
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: main
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: ubuntu-20.04
+  steps:
+  - checkout: self
+  - task: UsePythonVersion@0
+    displayName: Use Python 3.x
+  - task: CmdLine@2
+    displayName: Install Dependencies
+    inputs:
+      script: >
+        pip install flask
+
+
+        pip install autopep8
+
+
+        pip install selenium
+  - task: SonarCloudPrepare@1
+    displayName: Prepare analysis on SonarCloud
+    inputs:
+      SonarCloud: 750cf8e6-89c3-4036-8376-c51fea0a7d40
+      organization: ray-perry
+      scannerMode: CLI
+      configMode: manual
+      cliProjectKey: ray-perry_Blood-Pressure-Calculator
+      cliProjectName: Blood Pressure Calculator
+  - task: SonarCloudAnalyze@1
+    displayName: Run Code Analysis
+  - task: SonarCloudPublish@1
+    displayName: Publish Quality Gate Result
+  - task: CmdLine@2
+    displayName: Run Unit Tests
+    inputs:
+      script: >+
+        pip install coverage
+
+
+        pip install xmlrunner
+
+
+        python Tests/bp_unittest.py
+
+
+        coverage run -m unittest Tests/bp_unittest.py && coverage report -m && coverage html
+
+
+        zip -r htmlcov.zip htmlcov
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Unit Tests & Coverage '
+    inputs:
+      PathtoPublish: $(System.DefaultWorkingDirectory)/htmlcov.zip
+      ArtifactName: htmlcov.zip
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results '
+    inputs:
+      testResultsFiles: TEST-UnitTestBpCalc*.xml
+      searchFolder: $(System.DefaultWorkingDirectory)/Tests/test-reports
+  - task: ArchiveFiles@2
+    displayName: Archive Application
+    inputs:
+      rootFolderOrFile: $(System.DefaultWorkingDirectory)/Application
+      includeRootFolder: false
+      archiveFile: $(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip
+  - task: ArchiveFiles@2
+    displayName: Archive Tests
+    inputs:
+      rootFolderOrFile: $(System.DefaultWorkingDirectory)/Tests
+      includeRootFolder: false
+      archiveFile: $(Build.ArtifactStagingDirectory)/Tests$(Build.BuildId).zip
+  - task: CopyFiles@2
+    displayName: Copy ARM templates
+    inputs:
+      SourceFolder: ArmTemplates
+      TargetFolder: $(build.artifactstagingdirectory)
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Artifact for Release
+...

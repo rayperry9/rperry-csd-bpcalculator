@@ -1,0 +1,51 @@
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: main
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: ubuntu-20.04
+  steps:
+  - checkout: self
+  - task: UsePythonVersion@0
+    displayName: Use Python 3.x
+  - task: CmdLine@2
+    displayName: Install Python Dependencies
+    inputs:
+      script: >+
+        pip install selenium
+
+
+        pip install coverage
+
+
+        pip install xmlrunner
+
+  - task: CmdLine@2
+    displayName: Install Chrome and Chrome Driver
+    inputs:
+      script: >+
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+
+        sudo apt install ./google-chrome-stable_current_amd64.deb
+
+
+        wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+
+
+        unzip chromedriver_linux64.zip
+
+  - task: CmdLine@2
+    displayName: Run E2E Tests
+    inputs:
+      script: python Tests/bp_E2Etesting.py
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results '
+    inputs:
+      testResultsFiles: TEST-E2ETestBpCalc*.xml
+      searchFolder: $(System.DefaultWorkingDirectory)/Tests/test-reports
+...
